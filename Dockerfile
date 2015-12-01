@@ -2,9 +2,12 @@ FROM debian:stable
 MAINTAINER Lance Hartung
 
 # Install python interpreter.
-RUN apt-get update && apt-get install -y python python-pip
+RUN apt-get update && apt-get install -y python python-pip python-dev
 RUN pip install --upgrade pip
-RUN pip install --requirement requirements.txt
+
+# Install python dependencies.
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --requirement /tmp/requirements.txt
 
 # Install our python code to the filesystem.
 COPY example /opt/example
