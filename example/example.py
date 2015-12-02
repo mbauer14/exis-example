@@ -31,12 +31,12 @@ class ExampleSession(ApplicationSession):
 
 
 if __name__ == "__main__":
-    ws_url = os.environ['WS_URL']
+    #ws_url = os.environ['WS_URL']
 
     config = dict()
     config['domain'] = os.environ['DOMAIN']
     config['token'] = os.environ['EXIS_TOKEN']
 
-    runner = ApplicationRunner(url=unicode(ws_url),
+    runner = ApplicationRunner(url=u"wss://node.exis.io:8000/ws",
             realm=unicode(config['domain']), extra=config)
     runner.run(ExampleSession)
