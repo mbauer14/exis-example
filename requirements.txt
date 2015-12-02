@@ -1,6 +1,7 @@
 Twisted==15.5.0
 argparse==1.2.1
 autobahn==0.10.9
+service-identity==14.0.0
 six==1.10.0
 txaio==2.1.0
 wsgiref==0.1.2
