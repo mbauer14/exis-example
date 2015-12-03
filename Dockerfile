@@ -1,22 +1,8 @@
-FROM debian:stable
+FROM exis/exis-python
 MAINTAINER Lance Hartung
 
-# Install python interpreter.
-RUN apt-get update && apt-get install -y python python-pip python-dev
-RUN pip install --upgrade pip
-
-# Install python dependencies.
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install --requirement /tmp/requirements.txt
-
-# Install our python code to the filesystem.
-COPY example /opt/example
-
-# Drop down to an unprivileged user.
-USER daemon
-
-# Tell python where to find our code.
-ENV PYTHONPATH /opt/example
+ENV WS_URL ws://sandbox.exis.io:8000/ws
+ENV DOMAIN xs.example
 
 # Go run it.
-CMD ["python", "-m", "example"]
+CMD ["python", "-m", "example.example"]

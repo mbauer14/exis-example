@@ -1,29 +1,13 @@
 import os
 
-from autobahn.twisted.wamp import ApplicationSession, ApplicationRunner
+from rabcorelib.pyriffle import FabricSession
 from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
 
 
-class ExampleSession(ApplicationSession):
-    def __init__(self, config=None):
-        ApplicationSession.__init__(self, config=config)
-
-        args = config.extra
-        self.domain = args['domain']
-        self.token = args['token']
-
-    def onChallenge(self, details):
-        if details.method == "token":
-            return unicode(self.token)
-        else:
-            return u''
-
-    def onConnect(self):
-        self.join(unicode(self.domain), [u"token"], unicode(self.domain))
-
+class ExampleSession(FabricSession):
     @inlineCallbacks
     def onJoin(self, details):
-        yield self.register(self.hello, self.domain + "/hello#details")
+        yield self.register(self.hello, "hello#details")
 
     def hello(self, details):
         caller = details.get("caller", "anonymous")
@@ -31,12 +15,7 @@ class ExampleSession(ApplicationSession):
 
 
 if __name__ == "__main__":
-    #ws_url = os.environ['WS_URL']
+    ws_url = os.environ['WS_URL']
+    domain = os.environ['DOMAIN']
 
-    config = dict()
-    config['domain'] = os.environ['DOMAIN']
-    config['token'] = os.environ['EXIS_TOKEN']
-
-    runner = ApplicationRunner(url=u"wss://node.exis.io:8000/ws",
-            realm=unicode(config['domain']), extra=config)
-    runner.run(ExampleSession)
+    ExampleSession.start(unicode(ws_url), unicode(domain), start_reactor=True)
