@@ -7,4 +7,4 @@ Here is how to run it locally:
     docker build -t exis-example .
     docker run -t exis-example
 
-Visit https://exis.io to learn how to host it on Exis!
+Visit www.exis.io to learn how to host it on Exis!
