@@ -1,13 +1,11 @@
 import os
 
-from rabcorelib.pyriffle import FabricSession
-from twisted.internet.defer import inlineCallbacks, returnValue, Deferred
+import riffle
 
 
-class ExampleSession(FabricSession):
-    @inlineCallbacks
-    def onJoin(self, details):
-        yield self.register(self.hello, "hello#details")
+class ExampleSession(riffle.Domain):
+    def onJoin(self):
+        self.register("hello#details", self.hello)
 
     def hello(self, details):
         caller = details.get("caller", "anonymous")
@@ -16,7 +14,6 @@ class ExampleSession(FabricSession):
 
 
 if __name__ == "__main__":
-    ws_url = os.environ['WS_URL']
+    riffle.SetFabric(os.environ['WS_URL'])
     domain = os.environ['DOMAIN']
-
-    ExampleSession.start(unicode(ws_url), unicode(domain), start_reactor=True)
+    ExampleSession(domain).join()
