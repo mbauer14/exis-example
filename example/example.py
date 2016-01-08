@@ -12,7 +12,7 @@ class ExampleSession(FabricSession):
     def hello(self, details):
         caller = details.get("caller", "anonymous")
         print("Received hello from: {}".format(caller))
-        return "Hello, {}".format(caller)
+        return "Hello subway, {}".format(caller)
 
 
 if __name__ == "__main__":
