@@ -1,2 +1,2 @@
-Base: exis-python
+Base: exis-pytn
 Command: python -m example.example
